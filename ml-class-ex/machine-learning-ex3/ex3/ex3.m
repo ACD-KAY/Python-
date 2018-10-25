@@ -34,7 +34,8 @@ fprintf('Loading and Visualizing Data ...\n')
 
 load('ex3data1.mat'); % training data stored in arrays X, y
 m = size(X, 1);
-
+i=1;
+fprintf('%d\n',y(1:500:5000,1));
 % Randomly select 100 data points to display
 rand_indices = randperm(m);
 sel = X(rand_indices(1:100), :);
@@ -83,6 +84,6 @@ pause;
 %% ================ Part 3: Predict for One-Vs-All ================
 
 pred = predictOneVsAll(all_theta, X);
-fprintf('\nTraining Set Accuracy: %f\n', y);
+fprintf('%d\n',pred(1:500:5000,1));
 fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred == y)) * 100);
 
