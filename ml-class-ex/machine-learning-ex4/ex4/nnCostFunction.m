@@ -62,11 +62,50 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+X=[ones(m,1),X]; %5000x401
+z1=Theta1*X';    %25x5000
+a1=sigmoid(z1);  %25x5000
+a1=[ones(m,1),a1']; % 5000x26
+% Theta2 10x26				
+z2=Theta2*a1';  %10x5000
+h=sigmoid(z2);	%10x5000
+h=h';    %transform 10x5000
 
+		%Vectorizer y for labels
+y_k=zeros(m,num_labels); % 5000x10
+for i=1:m
+	y_k(i,y(i))=1;
+end
 
+J=(-1/m)*sum(sum(y_k.*log(h) + (1-y_k).*log(1-h)));
 
+r=lambda/2/m*( sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end).^2)) );
+J = J + r;
 
+	%Gradient compute
+	
+	%Theta1 25x401
+	%Theta2 10x26
+for i=1:m
+	a1=X(i,:); %1x401
+	z2=Theta1*a1';% 25x1
+	a2=sigmoid(z2);% 25x1
+	a2=[1;a2]; % 26x1
+	z3=Theta2*a2; % 10x1
+	a3=sigmoid(z3);% 10x1
+	y=y_k(i,:);% 1x10
+	delta3=a3-y'; % 10x1
+	delta2=Theta2(:,2:end)'*delta3.*sigmoidGradient(z2);% 25x1
+Theta1_grad=Theta1_grad+delta2*a1; %25x401
+Theta2_grad=Theta2_grad+delta3*a2'; %25x26
+end
+Theta1_grad=Theta1_grad./m;
+Theta2_grad=Theta2_grad./m;
 
+Theta1(:,1)=0;
+Theta2(:,1)=0;
+Theta1_grad=Theta1_grad + lambda/m*Theta1;
+Theta2_grad=Theta2_grad + lambda/m*Theta2;
 
 
 
