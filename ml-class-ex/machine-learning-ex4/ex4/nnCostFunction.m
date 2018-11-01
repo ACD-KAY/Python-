@@ -79,7 +79,8 @@ end
 
 J=(-1/m)*sum(sum(y_k.*log(h) + (1-y_k).*log(1-h)));
 
-r=lambda/2/m*( sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end).^2)) );
+r=lambda/2/m*( sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end).^2)) );% Not  add theta0
+
 J = J + r;
 
 	%Gradient compute
