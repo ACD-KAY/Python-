@@ -18,6 +18,7 @@ end
 
 % Plot the SVM boundary
 hold on
+%绘制等高线
 contour(X1, X2, vals, [0.5 0.5], 'b');
 hold off;
 
